@@ -19,5 +19,15 @@ class Market
     end
     names
   end
+
+  def vendors_that_sell(item)
+    in_stock = []
+    @vendors.each do |vendor|
+      if vendor.check_stock(item) > 0
+        in_stock << vendor
+      end
+    end
+    in_stock
+  end
   
 end
