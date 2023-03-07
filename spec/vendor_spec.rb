@@ -19,11 +19,12 @@ RSpec.describe Vendor do
     end
   end
 
-  xdescribe '#stock' do
+  describe '#stock' do
     it 'can add an item hash to inventory' do
       vendor.stock(item1, 30)
       
       expect(vendor.inventory).to eq(item1 => 30)
+      expect(vendor.check_stock(item1)).to eq(30)
     end
   end
 
