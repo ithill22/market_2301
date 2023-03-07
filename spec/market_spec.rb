@@ -70,5 +70,42 @@ RSpec.describe Market do
     end
   end
 
+  describe '#total_inventory' do
+    it 'can return a hash with items as keys and a subhash with quantity(key)/total inventory(value) and vendors(key)/array of vendors with item(value).' do
+      expect(market.total_inventory).to eq({})
+
+      market.add_vendor(vendor1)
+      market.add_vendor(vendor2)
+      market.add_vendor(vendor3)
+      vendor1.stock(item1, 35) 
+      vendor1.stock(item2, 7) 
+      vendor2.stock(item4, 50)
+      vendor2.stock(item3, 25)
+      vendor3.stock(item1, 65) 
+
+      expect(market.total_inventory).to eq({item1 => {quantity: 100, vendors: [vendor1, vendor3]},
+        item2 => {quantity: 7, vendors: [vendor1]},
+        item3 => {quantity: 25, vendors: [vendor2]},
+        item4 => {quantity: 50, vendors: [vendor2]}})
+    end
+  end
+
+  # describe '#overstocked_items' do
+  #   it 'can return a list of items if it is old by more than one vendor and its total quantity is greater than 50' do
+  #     expect(market.overstocked_items).to eq([])
+
+  #     market.add_vendor(vendor1)
+  #     market.add_vendor(vendor2)
+  #     market.add_vendor(vendor3)
+  #     vendor1.stock(item1, 35) 
+  #     vendor1.stock(item2, 7) 
+  #     vendor2.stock(item4, 50)
+  #     vendor2.stock(item3, 25)
+  #     vendor3.stock(item1, 65)  
+
+  #     expect(market.overstocked_items).to eq([item1])
+  #   end
+  # end
+
   
 end
