@@ -69,4 +69,25 @@ class Market
     end
     overstocked
   end
+
+  def sell(item, quantity)
+    total_inventory.each do |item, values|
+      if values[:quantity] < quantity
+        false
+      elsif values[:quantity] > quantity
+       until quantity == 0
+        @vendors.each do |vender|
+          if vendor.inventory.include?(item) && vendor.check_stock(item) > 0
+            vendor.inventory[item] -= quantity
+            quantity = 0
+          else
+            quantity -= vendor.check_stock(item)
+            vender.inventory[item] = 0
+          end
+          true
+        end
+       end
+      end
+    end
+  end
 end

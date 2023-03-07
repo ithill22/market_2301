@@ -107,5 +107,29 @@ RSpec.describe Market do
     end
   end
 
+  describe '#sell' do
+    it 'can search through the inventory of all vendors and return a boolean depending on total quantity. If True it can reduce inventory of specified quantity' do
+      
+      market.add_vendor(vendor1)
+      market.add_vendor(vendor2)
+      market.add_vendor(vendor3)
+      vendor1.stock(item1, 35) 
+      vendor1.stock(item2, 7) 
+      vendor2.stock(item4, 50)
+      vendor2.stock(item3, 25)
+      vendor3.stock(item1, 65)  
+
+      expect(market.sell(item2, 9)).to be false
+
+      expect(market.sell(item1, 40)).to be true 
+      expect(market.total_inventory).to eq({item1 => {quantity: 60, vendors: [vendor3]},
+        item2 => {quantity: 7, vendors: [vendor1]},
+        item3 => {quantity: 25, vendors: [vendor2]},
+        item4 => {quantity: 50, vendors: [vendor2]}})
+      expect(vendor1.inventory).to eq(item2 => 7)
+      expect(vendor1.check_stock(item1)).to eq(0)
+      expect(vendor3.inventory).to eq(item1 => 60)
+    end
+  end
   
 end
