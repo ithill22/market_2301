@@ -7,4 +7,11 @@ class Vendor
     @name = name
     @inventory = Hash.new(0)
   end
+
+  def check_stock(item)
+    return 0 if !@inventory.keys.include?(item)
+    @inventory[item]
+  end
+
+  
 end
