@@ -25,6 +25,13 @@ RSpec.describe Vendor do
       
       expect(vendor.inventory).to eq(item1 => 30)
       expect(vendor.check_stock(item1)).to eq(30)
+
+      vendor.stock(item1, 25)
+      vendor.stock(item2, 12)
+
+      expect(vendor.check_stock(item1)).to eq(55)
+      expect(vendor.check_stock(item2)).to eq(12)
+      expect(vendor.inventory).to eq(item1 => 55, item2 => 12)
     end
   end
 
