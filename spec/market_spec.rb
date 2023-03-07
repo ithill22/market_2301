@@ -56,5 +56,19 @@ RSpec.describe Market do
     end
   end
 
+  describe '#sorted_item_list' do
+    it 'can return a list of names of all items in vendor inventory in alphabetic order' do
+      expect(market.sorted_item_list(vendor1)).to eq([])
+
+      market.add_vendor(vendor1)
+      vendor1.stock(item1, 35) 
+      vendor1.stock(item2, 7)
+      vendor1.stock(item3, 25)
+      vendor1.stock(item4, 50)
+
+      expect(market.sorted_item_list(vendor1)).to eq(["Banana Nice Cream", 'Peach', "Peach-Raspberry Nice Cream", 'Tomato'])
+    end
+  end
+
   
 end
